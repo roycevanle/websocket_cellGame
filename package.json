@@ -16,5 +16,9 @@
   "bugs": {
     "url": "https://github.com/roycevanle/websocket_cellGame/issues"
   },
-  "homepage": "https://github.com/roycevanle/websocket_cellGame#readme"
+  "homepage": "https://github.com/roycevanle/websocket_cellGame#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "websocket": "^1.0.33"
+  }
 }
