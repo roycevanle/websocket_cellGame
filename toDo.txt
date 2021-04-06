@@ -1,0 +1,5 @@
+Ryan's Suggestion
+-Add a light-out mode for the square
+
+Justin's Suggestion
+-Make squares smaller as the timer gets smaller

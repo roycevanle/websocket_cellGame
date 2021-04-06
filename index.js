@@ -61,6 +61,8 @@ wsServer.on("request", request => {
                 "color": color
             })
 
+            //start the game
+            if (game.clients.length === 3) updateGameState();
             const payLoad = {
                 "method": "join",
                 "game": game
@@ -71,6 +73,21 @@ wsServer.on("request", request => {
             })
         }
 
+        //a client plays, we just update the state
+        if (result.method ==="play") {
+            const clientId = result.clientId;
+            const gameId = result.gameId;
+            const ballId = result.ballId;
+            const color = result.color;
+
+            let state = games[gameId].state;
+            if (!state) {
+                state = {}
+
+            }
+            state[ballId] = color;
+            games[gameId].state = state;
+        }
     })
 
     // generate a new clientId value with key being the accepted connection object
@@ -88,6 +105,25 @@ wsServer.on("request", request => {
     //send back the client connection
     connection.send(JSON.stringify(payLoad))
 })
+
+function updateGameState() {
+
+    //games is a map of {"gameid", & their other attributes related to that game}
+    for(const g of Object.keys(games)) {
+        const game = games[g]
+        const payLoad = {
+            "method": "update",
+            "game": game
+        }
+
+        // loop through each client to update their game state
+        game.clients.forEach(c => {
+            clients[c.clientId].connection.send(JSON.stringify(payLoad))
+        })
+    }
+
+    setTimeout(updateGameState, 500);
+}
 
 // function to generate guid
 function S4() {

@@ -75,6 +75,17 @@
 
             }
 
+            //update
+            if (response.method === "update") {
+                //{1: "red", ...}
+                if(!response.game.state) return;
+                for(const b of Object.keys(response.game.state)) {
+                    const color = response.game.state[b];
+                    const ballObject = document.getElementById("ball" + b);
+                    ballObject.style.backgroundColor =  color;
+                }
+            }
+
             //join
             if (response.method === "join") {
                 const game = response.game;
@@ -100,7 +111,7 @@
 
                 for(let i = 0; i < game.balls; i++) {
                     const b = document.createElement("button");
-                    b.id = "ball" + i;
+                    b.id = "ball" + (i + 1);
                     b.tag = i+1;
                     b.textContent = i+1; 
                     b.style.width = "150px";
@@ -108,6 +119,15 @@
                     b.addEventListener("click", e => {
                         // do something
                         b.style.background = playerColor;
+                        const payLoad = {
+                            "method": "play",
+                            "clientId": clientId,
+                            "gameId": gameId,
+                            "ballId": b.tag,
+                            "color": playerColor
+                        }
+
+                        ws.send(JSON.stringify(payLoad));
                     })
                     divBoard.appendChild(b);
                 }
