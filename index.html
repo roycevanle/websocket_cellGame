@@ -8,12 +8,20 @@
 </head>
 <body>
     <h1>Ball Game</h1>
+    <!-- when we serve this page, the script automatically runs. Request to websocket -->
     <script>
-        let ws = new WebSocket("ws://loclhost:9090")
+        let clientId = null;
+        let ws = new WebSocket("ws://localhost:9090")
+
         ws.onmessage = message => {
             //message.data
             const response = JSON.parse(message.data);
-            console.log(response);
+            // connect
+            if (response.method === "connect") {
+                clientId = response.clientId;
+                console.log("client id set successfully: " + clientId);
+
+            }
         }
     </script>
 </body>
