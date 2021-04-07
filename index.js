@@ -6,7 +6,7 @@ app.listen(9091, ()=> console.log("Listening on http port 9091"))
 
 const websocketServer = require("websocket").server;
 const httpServer = http.createServer();
-httpServer.listen(9090, () => console.log("Listening on 9090"));
+httpServer.listen(80, () => console.log("Listening on port 80"));
 
 //hasmap
 const clients = {};
@@ -27,7 +27,6 @@ wsServer.on("request", request => {
         //i have receieved a message from the client
         //a client wants to create a new game
         if (result.method === "create") {
-            console.log("made it here");
             const clientId = result.clientId;
             const gameId = guid();
             games[gameId] = {

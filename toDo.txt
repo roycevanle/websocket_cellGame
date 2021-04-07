@@ -3,3 +3,9 @@ Ryan's Suggestion
 
 Justin's Suggestion
 -Make squares smaller as the timer gets smaller
+
+TO DO ***
+-Research on how to host servers
+    -Probably digital ocean & docker
+-Research making socketIO the address of our server when we have it. I.e. (socket = io(http://app.com))
+-Check what happens when you post a null host in server.listen([port[, host[, backlog]]][, callback])
